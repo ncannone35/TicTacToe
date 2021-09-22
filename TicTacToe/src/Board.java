@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 
 public class Board {
-    //-1 : o  2: x
+    //-1 : o  1: x
     static int player, computer;
     private static final int[][] board = new int[3][3];//initial state
 
