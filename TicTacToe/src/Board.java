@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 
 public class Board {
-    //-1 : o  1: x
+    //-1 : o  2: x
     static int player, computer;
     private static final int[][] board = new int[3][3];//initial state
 
@@ -233,6 +233,7 @@ public class Board {
 
      static void tic_tac_toe(){
         Scanner scan = new Scanner(System.in);
+        long time_computing = 0;
         System.out.println("Enter '1' to play against the MINIMAX; Enter '2' to play against an H-MINIMAX with alpha beta pruning:");
         int game = scan.nextInt();
         boolean min;
@@ -255,8 +256,21 @@ public class Board {
         } else {
             player = -1;
             computer = 1;
-            if(min) minimax_move();
-            else pruning_move();
+            if(min) {
+                long start = System.currentTimeMillis();
+                minimax_move();
+                long end = System.currentTimeMillis();
+                long elapsed = end-start;
+                System.out.println("Time for computation: " + elapsed + " ms");
+                time_computing += elapsed;
+            }
+            else {
+                long start = System.currentTimeMillis();
+                pruning_move();long end = System.currentTimeMillis();
+                long elapsed = end-start;
+                System.out.println("Time for computation: " + elapsed + " ms");
+                time_computing += elapsed;
+            }
         }
         printBoard();
         while (true) {
@@ -277,15 +291,27 @@ public class Board {
             }
             System.out.println();
             System.out.println("Computing in progress...");
-            if(min) minimax_move();
-            else pruning_move();
+            if(min) {
+                long start = System.currentTimeMillis();
+                minimax_move();
+                long end = System.currentTimeMillis();
+                long elapsed = end-start;
+                System.out.println("Time for computation: " + elapsed + " ms");
+                time_computing += elapsed;
+            }else {
+                long start = System.currentTimeMillis();
+                pruning_move();long end = System.currentTimeMillis();
+                long elapsed = end-start;
+                System.out.println("Time for computation: " + elapsed + " ms");
+                time_computing += elapsed;
+            }
             printBoard();
             if (isTie()) {
                 System.out.println("Tie!");
                 return;
             } else if (isWin()) {
-                if(min) System.out.println("You really thought you could beat MINIMAX?");
-                else System.out.println("You really thought you could beat H-MINIMAX with alpha beta pruning?");
+                if(min) System.out.println("You really thought you could beat MINIMAX? I just smoked you in " + time_computing + " ms.");
+                else System.out.println("You really thought you could beat H-MINIMAX with alpha beta pruning? I just smoked you in " + time_computing + " ms.");
                 return;
             }
         }
