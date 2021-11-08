@@ -1,4 +1,4 @@
-# TicTacToe
+# TicTacToeAI
 Worlds greatest time-wasting activity
 
 
